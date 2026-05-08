@@ -1,0 +1,14 @@
+=== ESTADO GENERAL DE LA BD ===
+Total leads:             2037
+Con email:               1009
+Ya enviados:             0
+Pendientes con email:    0
+
+=== RESTAURANTES PENDIENTES (filtro ampliado) ===
+Total restaurantes pendientes: 0
+
+WARNING: No se encontraron leads de restaurantes pendientes con ese filtro.
+
+Muestra de giros disponibles (primeros 30 de la lista pendiente):
+
+=== FIN DEL DIAGNOSTICO ===

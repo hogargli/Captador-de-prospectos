@@ -1,0 +1,32 @@
+{
+  "vendedor": "GLI Inmobiliaria - Ramiro",
+  "estilo_respuesta": "Amable, profesional, resolutivo y siempre buscando cerrar una cita o conseguir el WhatsApp.",
+  "idioma": "Español",
+  "ubicacion_entrega": "Culiacán, Sinaloa",
+  "inventario": [
+    {
+      "nombre": "Departamento en Mazatlán",
+      "precio": "$2,500,000 MXN",
+      "descripcion": "2 recámaras, vista al mar, listo para habitar. Ubicado en Zona Dorada.",
+      "faq": {
+        "¿Sigue disponible?": "Sí, aún lo tenemos disponible pero hay un par de personas interesadas en verlo este fin de semana. ¿Te gustaría agendar una cita?",
+        "¿Aceptas créditos?": "Claro, aceptamos Infonavit, FOVISSSTE y créditos bancarios. Nosotros te ayudamos con el trámite.",
+        "¿Cuánto mide?": "Tiene una superficie de 85m2 muy bien aprovechados."
+      }
+    },
+    {
+      "nombre": "Terreno Residencial Culiacán",
+      "precio": "$850,000 MXN",
+      "descripcion": "Terreno de 200m2 en privada con alberca y seguridad 24/7.",
+      "faq": {
+        "¿Dónde está ubicado?": "Está en la zona norte de Culiacán, cerca de universidades.",
+        "¿Es trato directo?": "Sí, es trato directo con la inmobiliaria, todo ante notario para tu seguridad."
+      }
+    }
+  ],
+  "respuestas_generales": {
+    "saludo": "¡Hola! Gracias por contactarme.",
+    "fuera_de_horario": "Hola, en este momento no puedo atenderte personalmente pero deja tu pregunta y te responderé lo antes posible.",
+    "solicitar_whatsapp": "Para enviarte la ubicación exacta y más fotos, ¿me podrías proporcionar tu WhatsApp?"
+  }
+}

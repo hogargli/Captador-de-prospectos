@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "server.js"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/prospect",
+      "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/enrich",
+      "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/send-campaign",
+      "schedule": "0 9 * * 1-5"
+    }
+  ]
+}

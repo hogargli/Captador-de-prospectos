@@ -1,0 +1,164 @@
+[
+  {
+    "_id": "3ce7csxgs",
+    "fuente": "DENUE",
+    "tipo": "denue",
+    "total_encontrados": 0,
+    "total_con_email": 0,
+    "total_nuevos": 0,
+    "total_duplicados": 0,
+    "parametros": {
+      "categorias": 16,
+      "entidad": "Sinaloa",
+      "ciudad": "Culiacán",
+      "web_emails": 0
+    },
+    "errores": [],
+    "fecha_captura": "2026-04-01T22:54:42.996Z",
+    "createdAt": "2026-04-01T22:54:42.996Z"
+  },
+  {
+    "_id": "esfufb9na",
+    "fuente": "DENUE",
+    "tipo": "denue",
+    "total_encontrados": 3718,
+    "total_con_email": 356,
+    "total_nuevos": 241,
+    "total_duplicados": 621,
+    "parametros": {
+      "categorias": 16,
+      "entidad": "Sinaloa",
+      "ciudad": "Culiacán",
+      "web_emails": 9
+    },
+    "errores": [],
+    "fecha_captura": "2026-04-01T23:03:41.799Z",
+    "createdAt": "2026-04-01T23:03:41.799Z"
+  },
+  {
+    "_id": "prqtckezo",
+    "fuente": "DENUE",
+    "tipo": "denue",
+    "total_encontrados": 3718,
+    "total_con_email": 356,
+    "total_nuevos": 576,
+    "total_duplicados": 286,
+    "parametros": {
+      "categorias": 16,
+      "entidad": "Sinaloa",
+      "ciudad": "Culiacán",
+      "web_emails": 9
+    },
+    "errores": [],
+    "fecha_captura": "2026-04-01T23:03:41.802Z",
+    "createdAt": "2026-04-01T23:03:41.802Z"
+  },
+  {
+    "_id": "21jz2b0vu",
+    "fuente": "DENUE",
+    "tipo": "denue",
+    "total_encontrados": 5276,
+    "total_con_email": 759,
+    "total_nuevos": 617,
+    "total_duplicados": 526,
+    "parametros": {
+      "categorias": 29,
+      "entidad": "Sinaloa",
+      "ciudad": "Culiacán",
+      "web_emails": 17
+    },
+    "errores": [],
+    "fecha_captura": "2026-04-06T19:46:40.909Z",
+    "createdAt": "2026-04-06T19:46:40.909Z"
+  },
+  {
+    "_id": "8mdcc66a0",
+    "fuente": "DENUE",
+    "tipo": "denue",
+    "total_encontrados": 5276,
+    "total_con_email": 759,
+    "total_nuevos": 0,
+    "total_duplicados": 1143,
+    "parametros": {
+      "categorias": 29,
+      "entidad": "Sinaloa",
+      "ciudad": "Culiacán",
+      "web_emails": 17
+    },
+    "errores": [],
+    "fecha_captura": "2026-04-06T20:03:15.596Z",
+    "createdAt": "2026-04-06T20:03:15.596Z"
+  },
+  {
+    "_id": "utey0iwqj",
+    "fuente": "DENUE",
+    "tipo": "denue",
+    "total_encontrados": 10769,
+    "total_con_email": 1721,
+    "total_nuevos": 802,
+    "total_duplicados": 2115,
+    "parametros": {
+      "categorias": 61,
+      "entidad": "Sinaloa",
+      "ciudad": "Culiacán",
+      "web_emails": 30
+    },
+    "errores": [],
+    "fecha_captura": "2026-04-06T21:35:12.706Z",
+    "createdAt": "2026-04-06T21:35:12.706Z"
+  },
+  {
+    "_id": "c0okl19ts",
+    "fuente": "DENUE",
+    "tipo": "denue",
+    "total_encontrados": 7720,
+    "total_con_email": 1181,
+    "total_nuevos": 0,
+    "total_duplicados": 1813,
+    "parametros": {
+      "categorias": 56,
+      "entidad": "Sinaloa",
+      "ciudad": "Culiacán",
+      "web_emails": 22
+    },
+    "errores": [],
+    "fecha_captura": "2026-04-06T21:52:18.263Z",
+    "createdAt": "2026-04-06T21:52:18.264Z"
+  },
+  {
+    "_id": "yeiglzfh9",
+    "fuente": "DENUE",
+    "tipo": "denue",
+    "total_encontrados": 14837,
+    "total_con_email": 1489,
+    "total_nuevos": 1186,
+    "total_duplicados": 2135,
+    "parametros": {
+      "categorias": 75,
+      "entidad": "Sinaloa",
+      "ciudad": "Culiacán",
+      "web_emails": 25
+    },
+    "errores": [],
+    "fecha_captura": "2026-04-08T21:50:38.712Z",
+    "createdAt": "2026-04-08T21:50:38.712Z"
+  },
+  {
+    "_id": "kv8u6hpid",
+    "fuente": "DENUE",
+    "tipo": "denue",
+    "total_encontrados": 33094,
+    "total_con_email": 2989,
+    "total_nuevos": 4068,
+    "total_duplicados": 2839,
+    "parametros": {
+      "categorias": 154,
+      "entidad": "Sinaloa",
+      "ciudad": "Culiacán",
+      "web_emails": 42
+    },
+    "errores": [],
+    "fecha_captura": "2026-04-09T19:32:36.510Z",
+    "createdAt": "2026-04-09T19:32:36.510Z"
+  }
+]

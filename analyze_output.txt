@@ -1,0 +1,14 @@
+=== ESTADISTICAS DE LA BD ===
+Total leads: 2037
+Con email: 1009
+Ya enviados: 0
+Pendientes con email (primeros 500): 0
+
+=== TOP 50 GIROS MAS COMUNES EN PENDIENTES ===
+
+=== RESTAURANTES CON FILTRO AMPLIO (pendientes) ===
+Encontrados: 0
+
+Restaurantes YA enviados anteriormente: 0
+
+=== FIN DEL DIAGNOSTICO ===
