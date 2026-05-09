@@ -229,6 +229,16 @@ function parseDenueToLead(item, fuente = 'DENUE') {
  * Determina si el lead tiene un ingreso estimado > $100k/mes
  * Basado en Estrato (tamaño) y Giro de actividad
  */
+function calculateValueMetrics(item) {
+  const estrato = (item.Estrato || '').toLowerCase();
+  const actividad = (item.Clase_actividad || '').toLowerCase();
+  
+  // Scoring de ingresos (Simulación de ingresos altos)
+  const isLarge = estrato.includes('101') || estrato.includes('251') || estrato.includes('51');
+  const isHighValueActivity = actividad.includes('tecnolog') || actividad.includes('industrial') || actividad.includes('construccion') || actividad.includes('medico') || actividad.includes('especializ');
+  
+  const premium = isLarge || isHighValueActivity;
+  
   const score = calculateScore({
     giro: item.Clase_actividad || '',
     tamano_empresa: item.Estrato || '',
@@ -330,7 +340,6 @@ async function saveLead(leadData) {
       if (existing) {
         return { saved: false, reason: 'duplicado' };
       }
-      }
     }
     
     // Calcular Score Predictivo final
@@ -343,13 +352,13 @@ async function saveLead(leadData) {
       console.log(`💎 Pez Gordo con contacto completo: ${leadData.nombre_negocio}. Enviando Alerta Email...`);
       await notifyAdminOfPremiumLead(newLead);
     }
-    
+
     return { saved: true, lead: newLead };
   } catch (error) {
     if (error.code === 11000) {
       return { saved: false, reason: 'duplicado' };
     }
-    return { saved: false, reason: error.message };
+    return { saved: false, error: error.message };
   }
 }
 

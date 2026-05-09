@@ -400,7 +400,9 @@ cron.schedule('0 3 * * *', async () => {
     
     await runProspection();
     await runSpecializedProspection();
-    console.log('✅ CRON: Prospección diaria completada.');
+    const { syncAllLeadsToSheet } = require('./googleSheetsAgent');
+    await syncAllLeadsToSheet();
+    console.log('✅ CRON: Prospección y Sincronización completada.');
   } catch (error) {
     console.error('❌ CRON Error Prospección:', error.message);
   }
@@ -413,6 +415,8 @@ cron.schedule('0 2 * * *', async () => {
   console.log('⏰ CRON: Enriqueciendo leads...');
   try {
     await enrichLeadsWithWebEmails();
+    const { syncAllLeadsToSheet } = require('./googleSheetsAgent');
+    await syncAllLeadsToSheet();
   } catch (error) {
     console.error('❌ CRON Error Enriquecimiento:', error.message);
   }
