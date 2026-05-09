@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLI | CRM</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Fija -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <span class="logo-gold">GLI</span> <span class="logo-white">AUTONOMOUS</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" onclick="showTab('dashboard')">
+                    <span class="nav-icon">📊</span> Dashboard
+                </a>
+                <a href="#" class="nav-item" onclick="showTab('leads')">
+                    <span class="nav-icon">👥</span> Gestión de Leads
+                </a>
+                <a href="#" class="nav-item" onclick="showTab('campaign')">
+                    <span class="nav-icon">📢</span> Campaña Actual
+                </a>
+                <a href="#" class="nav-item" onclick="showTab('prospector')">
+                    <span class="nav-icon">🔍</span> Prospector IA
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span class="dot pulse"></span> Sistema Activo
+                </div>
+            </div>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main class="main-content">
+            <header class="main-header">
+                <div class="header-info">
+                    <h1>CRM</h1>
+                    <p id="dateDisplay" class="text-muted"></p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="syncSheets()">
+                        <span class="icon">☁️</span> Sincronizar Nube
+                    </button>
+                    <button class="btn btn-primary" onclick="refreshStats()">
+                        <span class="icon">↻</span> Actualizar
+                    </button>
+                </div>
+            </header>
+
+            <!-- TAB: DASHBOARD -->
+            <section id="tab-dashboard" class="tab-content active">
+                
+                <!-- Sección Metas -->
+                <div class="section-container">
+                    <h3 class="section-title">🎯 Objetivos Mensuales (Abril 2026)</h3>
+                    <div class="meta-grid">
+                        <div class="meta-card">
+                            <div class="meta-header">
+                                <span>Emails Enviados</span>
+                                <span id="metaEmails" class="meta-count">0 / 7,000</span>
+                            </div>
+                            <div class="progress-track">
+                                <div id="barEmails" class="progress-bar bar-gold" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="meta-card">
+                            <div class="meta-header">
+                                <span>Contactos Generados</span>
+                                <span id="metaContactos" class="meta-count">0 / 100</span>
+                            </div>
+                            <div class="progress-track">
+                                <div id="barContactos" class="progress-bar bar-blue" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="meta-card">
+                            <div class="meta-header">
+                                <span>Cierres de Venta</span>
+                                <span id="metaVentas" class="meta-count">0 / 4</span>
+                            </div>
+                            <div class="progress-track">
+                                <div id="barVentas" class="progress-bar bar-green" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KPI Grid -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-top">
+                            <span class="kpi-label">Base de Datos</span>
+                            <span class="kpi-icon-bg">👥</span>
+                        </div>
+                        <div class="kpi-value" id="totalLeads">0</div>
+                        <div class="kpi-trend">Total Prospectos</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-top">
+                            <span class="kpi-label">Enriquecidos</span>
+                            <span class="kpi-icon-bg">📧</span>
+                        </div>
+                        <div class="kpi-value" id="leadsConEmail">0</div>
+                        <div class="kpi-trend">Con Email Validado</div>
+                    </div>
+                    <div class="kpi-card highlight">
+                        <div class="kpi-top">
+                            <span class="kpi-label">Peces Gordos</span>
+                            <span class="kpi-icon-bg">💎</span>
+                        </div>
+                        <div class="kpi-value" id="leadsPremium">0</div>
+                        <div class="kpi-trend">Perfil Premium</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-top">
+                            <span class="kpi-label">Alcance</span>
+                            <span class="kpi-icon-bg">✉️</span>
+                        </div>
+                        <div class="kpi-value" id="emailsEnviados">0</div>
+                        <div class="kpi-trend">Mensajes Enviados</div>
+                    </div>
+                </div>
+
+                <div class="dashboard-footer-grid">
+                    <div class="chart-container">
+                        <h3 class="section-title">Distribución por Estado</h3>
+                        <div id="statusChart" class="placeholder-chart">
+                            <!-- Los estados se cargarán dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB: CAMPAÑA ACTUAL -->
+            <section id="tab-campaign" class="tab-content">
+                <div class="section-container">
+                    <h3 class="section-title">📢 Control de Campaña</h3>
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <span class="kpi-label">Total en Cola</span>
+                            <div class="kpi-value" id="cTotal">0</div>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">Enviados</span>
+                            <div class="kpi-value" id="cEnviados">0</div>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">Pendientes</span>
+                            <div class="kpi-value" id="cPendientes">0</div>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">Rebotados</span>
+                            <div class="kpi-value" id="cRebotados">0</div>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">Bajas</span>
+                            <div class="kpi-value" id="cBajas">0</div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-footer-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px;">
+                        <div class="meta-card">
+                            <h3 class="section-title">📧 Previsualización de Correo</h3>
+                            <div id="emailPreview" class="email-preview-box" style="background: white; border-radius: 8px; height: 400px; overflow-y: auto;">
+                                <!-- Se carga dinámicamente -->
+                            </div>
+                        </div>
+                        <div class="meta-card">
+                            <h3 class="section-title">⚙️ Configuración de Envío</h3>
+                            <div class="settings-group" style="margin-top: 20px;">
+                                <label style="display: block; margin-bottom: 10px; font-size: 13px; color: var(--text-muted);">Límite de Envío Diario</label>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <span style="font-size: 24px; font-weight: 700;" id="currentLimit">300</span>
+                                    <span class="text-muted">emails / día</span>
+                                </div>
+                                <p style="margin-top: 20px; font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+                                    El sistema ajusta el límite automáticamente basado en la antigüedad de la cuenta para evitar SPAM.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB: PROSPECTOR IA -->
+            <section id="tab-prospector" class="tab-content">
+                <div class="section-container">
+                    <h3 class="section-title">🤖 Agente Prospector IA</h3>
+                    <div class="meta-card" style="max-width: 600px; margin: 0 auto; text-align: center; padding: 60px 40px;">
+                        <div style="font-size: 48px; margin-bottom: 24px;">🔍</div>
+                        <h2 style="margin-bottom: 16px;">¿Iniciar nueva prospección?</h2>
+                        <p class="text-muted" style="margin-bottom: 32px;">El agente buscará nuevos negocios en Culiacán y Mazatlán, extraerá sus correos y calificará su potencial de inversión.</p>
+                        <button class="btn btn-primary" onclick="startProspection()" style="padding: 16px 40px; margin: 0 auto;">
+                            🚀 Lanzar Agente IA
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB: LEADS -->
+            <section id="tab-leads" class="tab-content">
+                <div class="table-controls">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Buscar negocio, email o giro..." class="input-dark">
+                    </div>
+                    <div class="filters">
+                        <select id="filter-giro" class="select-dark">
+                            <option value="">Todos los Giros</option>
+                            <option value="salud">Sector Salud</option>
+                            <option value="construccion">Construcción</option>
+                            <option value="agro">Agroindustria</option>
+                        </select>
+                        <select id="filter-premium" class="select-dark">
+                            <option value="">Nivel de Lead</option>
+                            <option value="premium">💎 Solo Premium</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Negocio</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Giro</th>
+                                <th>Tamaño</th>
+                                <th>Score</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leadsBody">
+                            <!-- Datos dinámicos -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="pagination" class="pagination"></div>
+            </section>
+
+            <!-- Otros TABS (Campaña, Prospector) pueden ir aquí -->
+
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
