@@ -199,14 +199,37 @@ app.post('/api/send-campaign', async (req, res) => {
   }
 });
 
-// Sincronizar con Google Sheets manualmente
+// Sincronizar con Google Sheets manualmente (Con limpieza automática)
 app.post('/api/sync-sheets', async (req, res) => {
   try {
+    console.log('🧹 Iniciando limpieza automática antes de sincronizar...');
+    
+    // 1. Limpieza de base de datos
+    await Lead.deleteMany({
+      $and: [
+        { email: { $in: ['', null] } },
+        { telefono: { $in: ['', null] } }
+      ]
+    });
+
+    const duplicateEmails = await Lead.aggregate([
+      { $match: { email: { $ne: '' } } },
+      { $group: { _id: "$email", ids: { $push: "$_id" }, count: { $sum: 1 } } },
+      { $match: { count: { $gt: 1 } } }
+    ]);
+    
+    for (const dup of duplicateEmails) {
+      const [keep, ...remove] = dup.ids;
+      await Lead.deleteMany({ _id: { $in: remove } });
+    }
+
+    // 2. Sincronización
     const success = await syncAllLeadsToSheet();
+    
     if (success) {
-      res.json({ success: true, message: 'Sincronización con Google Sheets completada' });
+      res.json({ success: true, message: 'Base de datos optimizada y sincronizada con Google Sheets' });
     } else {
-      res.status(500).json({ success: false, error: 'Error al sincronizar. Verifica tus credenciales en el archivo .env' });
+      res.status(500).json({ success: false, error: 'Error al sincronizar con la nube' });
     }
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -232,6 +255,44 @@ app.post('/api/unsubscribe', async (req, res) => {
     
     await processUnsubscribe(email);
     res.json({ success: true, message: `${email} dado de baja exitosamente` });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Admin: Limpieza de Base de Datos
+app.post('/api/admin/cleanup', async (req, res) => {
+  try {
+    console.log('🧹 Iniciando limpieza solicitada desde CRM...');
+    
+    // 1. Eliminar sin contacto útil
+    const r1 = await Lead.deleteMany({
+      $and: [
+        { email: { $in: ['', null] } },
+        { telefono: { $in: ['', null] } }
+      ]
+    });
+
+    // 2. Eliminar duplicados por email
+    const duplicateEmails = await Lead.aggregate([
+      { $match: { email: { $ne: '' } } },
+      { $group: { _id: "$email", ids: { $push: "$_id" }, count: { $sum: 1 } } },
+      { $match: { count: { $gt: 1 } } }
+    ]);
+    
+    let dupCount = 0;
+    for (const dup of duplicateEmails) {
+      const [keep, ...remove] = dup.ids;
+      await Lead.deleteMany({ _id: { $in: remove } });
+      dupCount += remove.length;
+    }
+
+    res.json({ 
+      success: true, 
+      message: `Limpieza completada. Eliminados: ${r1.deletedCount} inútiles y ${dupCount} duplicados.`,
+      deletedInutil: r1.deletedCount,
+      deletedDuplicates: dupCount
+    });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -397,3 +458,5 @@ async function start() {
 }
 
 start();
+
+module.exports = app;

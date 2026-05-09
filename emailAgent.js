@@ -488,11 +488,44 @@ if (require.main === module) {
     });
 }
 
-module.exports = {
-  sendEmail,
-  sendDailyCampaign,
-  processUnsubscribe,
-  getCampaignStats,
+async function notifyAdminOfPremiumLead(lead) {
+  try {
+    const sendSmtpEmail = new Brevo.SendSmtpEmail();
+    sendSmtpEmail.subject = "💎 NUEVA OPORTUNIDAD: Pez Gordo Detectado";
+    sendSmtpEmail.sender = { name: "GLI Bot", email: "bot@gli.mx" };
+    sendSmtpEmail.to = [{ email: process.env.SENDER_EMAIL, name: process.env.SENDER_NAME }];
+    
+    sendSmtpEmail.htmlContent = `
+      <div style="font-family: Arial, sans-serif; padding: 20px; color: #1a1a1a; background-color: #f9f9f9; border-radius: 10px;">
+        <h2 style="color: #b8955a; border-bottom: 2px solid #b8955a; padding-bottom: 10px;">💎 Pez Gordo Detectado</h2>
+        <p>Se ha identificado un nuevo lead de alto valor con datos completos:</p>
+        <div style="background: white; padding: 15px; border-radius: 8px; border-left: 5px solid #b8955a;">
+          <p><strong>Negocio:</strong> ${lead.nombre_negocio}</p>
+          <p><strong>Puntuación:</strong> <span style="color: #27ae60; font-weight: bold;">${lead.score || lead.calificacion}/100</span></p>
+          <p><strong>Giro:</strong> ${lead.giro}</p>
+          <p><strong>📞 Teléfono:</strong> ${lead.telefono}</p>
+          <p><strong>📧 Email:</strong> ${lead.email}</p>
+          <p><strong>📍 Ubicación:</strong> ${lead.direccion?.ubicacion || 'Culiacán'}</p>
+        </div>
+        <p style="margin-top: 20px;">Este lead cumple con los criterios de <strong>Ingresos Altos</strong> y tiene <strong>contacto dual</strong> verificado.</p>
+        <a href="https://wa.me/${lead.telefono.replace(/\D/g, '')}" style="display: inline-block; padding: 10px 20px; background-color: #25d366; color: white; text-decoration: none; border-radius: 5px; margin-top: 10px;">Contactar por WhatsApp</a>
+      </div>
+    `;
+
+    await apiInstance.sendTransacEmail(sendSmtpEmail);
+    console.log(`📧 Alerta de lead premium enviada a ${process.env.SENDER_EMAIL}`);
+    return true;
+  } catch (error) {
+    console.error('❌ Error enviando alerta admin:', error.message);
+    return false;
+  }
+}
+
+module.exports = { 
+  sendDailyCampaign, 
+  getCampaignStats, 
+  processUnsubscribe, 
   getDailyLimit,
-  getEmailHTML
+  notifyAdminOfPremiumLead,
+  getEmailHTML 
 };

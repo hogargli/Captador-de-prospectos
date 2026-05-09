@@ -12,6 +12,7 @@ const { connectDB } = require('./database');
 const { extractOwnerNameWithAI, generateHyperPersonalization } = require('./ai_extractor');
 const { syncAllLeadsToSheet } = require('./googleSheetsAgent');
 const { calculateScore } = require('./scoringAgent');
+const { notifyAdminOfPremiumLead } = require('./emailAgent');
 require('dotenv').config();
 
 // ... (rest of imports and constants)
@@ -335,7 +336,15 @@ async function saveLead(leadData) {
     // Calcular Score Predictivo final
     leadData.calificacion = calculateScore(leadData);
     
-    return { saved: true, lead: await Lead.create(leadData) };
+    const newLead = await Lead.create(leadData);
+    
+    // ALERTA DE EMAIL PARA PECES GORDOS (Con Email + Teléfono)
+    if (leadData.calificacion >= 80 && leadData.email && leadData.telefono) {
+      console.log(`💎 Pez Gordo con contacto completo: ${leadData.nombre_negocio}. Enviando Alerta Email...`);
+      await notifyAdminOfPremiumLead(newLead);
+    }
+    
+    return { saved: true, lead: newLead };
   } catch (error) {
     if (error.code === 11000) {
       return { saved: false, reason: 'duplicado' };
